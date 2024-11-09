@@ -20,7 +20,7 @@ public class DarkPaintingWindow extends PaintingWindow {
                 drawingEngine.refresh(g);
             }
         };
-        canvasPanel.setBorder(BorderFactory.createLineBorder(Color.blue));
+        canvasPanel.setBorder(BorderFactory.createLineBorder(Color.blue,4));
         canvasPanel.setBackground(Color.black);
         mainPanel.add(canvasPanel, BorderLayout.CENTER);
     }

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LightPaintingWindow extends PaintingWindow {
-    private Image backgroundImage;
+    private final ImageIcon backgroundImage = new ImageIcon("src/g1.jpg");
     public LightPaintingWindow() {
         super();
         super.mainPanel.setBackground(Color.WHITE);
@@ -17,9 +17,9 @@ public class LightPaintingWindow extends PaintingWindow {
                 drawingEngine.refresh(g);
             }
         };
-        backgroundImage = new ImageIcon("path/to/your/background.jpg").getImage();
 
-        canvasPanel.setBorder(BorderFactory.createLineBorder(Color.blue));
+
+        canvasPanel.setBorder(BorderFactory.createLineBorder(Color.blue,4));
         canvasPanel.setBackground(Color.WHITE);
         mainPanel.add(canvasPanel, BorderLayout.CENTER);
 

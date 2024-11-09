@@ -11,14 +11,12 @@ public abstract class PaintingWindow extends JFrame {
     protected JButton deleteButton;
     JPanel mainPanel = new JPanel();
 
-
     public PaintingWindow() {
         setTitle("Vector Drawing Application");
         setSize(1540, 820);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         drawingEngine = new DrawingEngineGUI();
         mainPanel.setPreferredSize(new Dimension(getWidth(), getHeight()));
-
         
         setLayout(new BorderLayout());
         mainPanel.setLayout(new BorderLayout());
