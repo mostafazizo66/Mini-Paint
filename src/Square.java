@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.util.Map;
 
 public class Square extends ShapeTemp {
 
@@ -16,6 +15,17 @@ public class Square extends ShapeTemp {
             canvas.drawRect(position.x, position.y, sideLength, sideLength);
         }
     }
+
+
+
+    @Override
+    public void move(int newX, int newY) {
+        Point p = new Point((int) (newX), (int) (newY));
+        this.setPosition(p);
+
+    }
+
+
 
 
 }

@@ -20,7 +20,7 @@ public class DarkPaintingWindow extends PaintingWindow {
                 drawingEngine.refresh(g);
             }
         };
-        canvasPanel.setBorder(BorderFactory.createLineBorder(Color.blue,4));
+        canvasPanel.setBorder(BorderFactory.createLineBorder(Color.blue, 4));
         canvasPanel.setBackground(Color.black);
         mainPanel.add(canvasPanel, BorderLayout.CENTER);
     }
@@ -58,10 +58,10 @@ public class DarkPaintingWindow extends PaintingWindow {
                 int result = JOptionPane.showConfirmDialog(this, inputPanel, "Enter Circle Properties", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION && Validations.isValidLength(radiusField.getText()) && Validations.isValidDouble(xField.getText()) && Validations.isValidDouble(yField.getText())) {
 
-                    int radius = Integer.parseInt(radiusField.getText());
+                    double radius = Double.parseDouble(radiusField.getText());
                     properties.put("Radius", (double) radius);
 
-                    position = new Point(Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()));
+                    position = new Point((int) Double.parseDouble(xField.getText()), (int) Double.parseDouble(yField.getText()));
                     shape = new Circle();
                 } else {
                     JOptionPane.showMessageDialog(this, "Invalid input. Please enter valid numbers.");
@@ -83,12 +83,12 @@ public class DarkPaintingWindow extends PaintingWindow {
 
                 int result = JOptionPane.showConfirmDialog(this, inputPanel, "Enter Rectangle Properties", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION && Validations.isValidLength(widthField.getText()) && Validations.isValidLength(heightField.getText()) && Validations.isValidDouble(xField.getText()) && Validations.isValidDouble(yField.getText())) {
-                    int width = Integer.parseInt(widthField.getText());
-                    int height = Integer.parseInt(heightField.getText());
+                    double width = Double.parseDouble(widthField.getText());
+                    double height = Double.parseDouble(heightField.getText());
                     properties.put("Width", (double) width);
                     properties.put("Height", (double) height);
 
-                    position = new Point(Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()));
+                    position = new Point((int) Double.parseDouble(xField.getText()), (int) Double.parseDouble(yField.getText()));
                     shape = new Rectangle();
                 } else {
                     JOptionPane.showMessageDialog(this, "Invalid input. Please enter valid numbers.");
@@ -107,10 +107,10 @@ public class DarkPaintingWindow extends PaintingWindow {
 
                 int result = JOptionPane.showConfirmDialog(this, inputPanel, "Enter Square Properties", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION && Validations.isValidLength(sideLengthField.getText()) && Validations.isValidDouble(xField.getText()) && Validations.isValidDouble(yField.getText())) {
-                    int sideLength = Integer.parseInt(sideLengthField.getText());
+                    double sideLength = Double.parseDouble(sideLengthField.getText());
                     properties.put("SideLength", (double) sideLength);
 
-                    position = new Point(Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()));
+                    position = new Point((int) Double.parseDouble(xField.getText()), (int) Double.parseDouble(yField.getText()));
                     shape = new Square();
                 } else {
                     JOptionPane.showMessageDialog(this, "Invalid input. Please enter valid numbers.");
@@ -132,7 +132,7 @@ public class DarkPaintingWindow extends PaintingWindow {
 
                 int result = JOptionPane.showConfirmDialog(this, inputPanel, "Enter Line Segment Properties", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION && Validations.isValidDouble(xField.getText()) && Validations.isValidDouble(yField.getText()) && Validations.isValidDouble(endXField.getText()) && Validations.isValidDouble(endYField.getText())) {
-                    position = new Point(Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()));
+                    position = new Point((int) Double.parseDouble(xField.getText()), (int) Double.parseDouble(yField.getText()));
                     properties.put("EndX", Double.parseDouble(endXField.getText()));
                     properties.put("EndY", Double.parseDouble(endYField.getText()));
                     shape = new LineSegment();

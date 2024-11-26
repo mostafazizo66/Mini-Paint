@@ -13,4 +13,15 @@ public class Circle extends ShapeTemp {
             canvas.drawOval(position.x-radius, position.y-radius, radius * 2, radius * 2);
         }
     }
-}
+
+    @Override
+    public void move(int newX, int newY) {
+        Point p = new Point((int) (newX), (int) (newY));
+        this.setPosition(p);
+
+    }
+
+
+
+
+    }

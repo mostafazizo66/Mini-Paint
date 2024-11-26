@@ -9,6 +9,7 @@ public abstract class PaintingWindow extends JFrame {
     protected JComboBox<String> shapeSelector;
     protected JButton colorizeButton;
     protected JButton deleteButton;
+    protected JButton moveButton;
     JPanel mainPanel = new JPanel();
 
     public PaintingWindow() {
@@ -17,12 +18,12 @@ public abstract class PaintingWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         drawingEngine = new DrawingEngineGUI();
         mainPanel.setPreferredSize(new Dimension(getWidth(), getHeight()));
-        
+
         setLayout(new BorderLayout());
         mainPanel.setLayout(new BorderLayout());
         add(mainPanel);
 
-        
+
         JPanel shapeButtonPanel = new JPanel();
         shapeButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
@@ -31,6 +32,7 @@ public abstract class PaintingWindow extends JFrame {
         JButton squareButton = new JButton("Square");
         JButton rectangleButton = new JButton("Rectangle");
         JButton backButton = new JButton("Back");
+
 
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -55,7 +57,7 @@ public abstract class PaintingWindow extends JFrame {
 
         mainPanel.add(shapeButtonPanel, BorderLayout.NORTH);
 
-        
+
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
         controlPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -64,20 +66,17 @@ public abstract class PaintingWindow extends JFrame {
 
 
         JLabel selectShapeLabel = new JLabel("Select Shape");
-        selectShapeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);  
+        selectShapeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         selectShapeLabel.setPreferredSize(new Dimension(200, 50));
         controlPanel.add(selectShapeLabel);
 
 
         shapeSelector = new JComboBox<>();
-        shapeSelector.setAlignmentX(Component.CENTER_ALIGNMENT);  
-        shapeSelector.setMaximumSize(new Dimension(200, 50));  
+        shapeSelector.setAlignmentX(Component.CENTER_ALIGNMENT);
+        shapeSelector.setMaximumSize(new Dimension(200, 50));
         controlPanel.add(shapeSelector);
 
 
-
-
-        
         colorizeButton = new JButton("Colorize");
         colorizeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         colorizeButton.addActionListener(new ActionListener() {
@@ -88,10 +87,10 @@ public abstract class PaintingWindow extends JFrame {
                 int Value = JOptionPane.showOptionDialog(null,
                         "Choose the colorize type",
                         "Colorize",
-                        JOptionPane.YES_NO_OPTION, 
-                        JOptionPane.INFORMATION_MESSAGE, 
-                        new ImageIcon(""), 
-                        options, 
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        new ImageIcon(""),
+                        options,
                         0);
                 if (Value == 0) {
                     colorizeOuterShape();
@@ -102,24 +101,57 @@ public abstract class PaintingWindow extends JFrame {
         });
         controlPanel.add(colorizeButton);
 
-        
+
         deleteButton = new JButton("Delete");
         deleteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         deleteButton.addActionListener(e -> deleteShape());
         controlPanel.add(deleteButton);
 
+        moveButton = new JButton("Move");
+        moveButton.addActionListener(e -> moveShape());
+
+        moveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        controlPanel.add(moveButton, BorderLayout.SOUTH);
+
         mainPanel.add(controlPanel, BorderLayout.WEST);
 
-        
+
     }
 
-    
+    private void moveShape() {
+        if (drawingEngine.getShapes().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No shapes to move", "Error!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String selectedShapeName = (String) shapeSelector.getSelectedItem();
+        if (selectedShapeName != null) {
+            Shape shape = drawingEngine.getShapeByName(selectedShapeName);
+            if (shape != null) {
+                JPanel inputPanel = new JPanel();
+                inputPanel.setLayout(new GridLayout(0, 2, 10, 10));
+                JTextField xField = new JTextField(5);
+                JTextField yField = new JTextField(5);
+                inputPanel.add(new JLabel("X Position:"));
+                inputPanel.add(xField);
+                inputPanel.add(new JLabel("Y Position:"));
+                inputPanel.add(yField);
+                int result = JOptionPane.showConfirmDialog(this, inputPanel, "Enter new position", JOptionPane.OK_CANCEL_OPTION);
+                if (result == JOptionPane.OK_OPTION && Validations.isValidDouble(xField.getText()) && Validations.isValidDouble(yField.getText())) {
+                    int newX = Integer.parseInt(xField.getText());
+                    int newY = Integer.parseInt(yField.getText());
+                    shape.move(newX, newY);
+                    canvasPanel.repaint();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid input. Please enter valid numbers.");
+                }
+            }
+        }
+    }
 
-    
+
     private void colorizeInnerShape() {
-        if(drawingEngine.getShapes().isEmpty())
-        {
-            JOptionPane.showMessageDialog(null, "No shapes","Error!",JOptionPane.ERROR_MESSAGE);
+        if (drawingEngine.getShapes().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No shapes", "Error!", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String selectedShapeName = (String) shapeSelector.getSelectedItem();
@@ -137,9 +169,8 @@ public abstract class PaintingWindow extends JFrame {
     }
 
     private void colorizeOuterShape() {
-        if(drawingEngine.getShapes().isEmpty())
-        {
-            JOptionPane.showMessageDialog(null, "No shapes","Error!",JOptionPane.ERROR_MESSAGE);
+        if (drawingEngine.getShapes().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No shapes", "Error!", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String selectedShapeName = (String) shapeSelector.getSelectedItem();
@@ -156,11 +187,9 @@ public abstract class PaintingWindow extends JFrame {
     }
 
 
-    
     private void deleteShape() {
-        if(drawingEngine.getShapes().isEmpty())
-        {
-            JOptionPane.showMessageDialog(null, "No shapes to delete","Error!",JOptionPane.ERROR_MESSAGE);
+        if (drawingEngine.getShapes().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No shapes to delete", "Error!", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String selectedShapeName = (String) shapeSelector.getSelectedItem();
@@ -175,5 +204,17 @@ public abstract class PaintingWindow extends JFrame {
     }
 
 
+
+
+    public void resize()
+    {
+
+    }
+
+
+
+
+
     protected abstract void createShape(String shapeType);
+
 }

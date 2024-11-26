@@ -18,4 +18,10 @@ public interface Shape {
 
     void setName(String name);
     String getName();
+
+
+    void move(int newX, int newY);
+
+
+
 }

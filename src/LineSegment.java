@@ -15,4 +15,18 @@ public class LineSegment extends ShapeTemp {
     }
 
 
+    @Override
+    public void move(int newX, int newY) {
+        Point p = new Point((int) (this.getPosition().getX() + newX), (int) (this.getPosition().getY() + newY));
+        this.setPosition(p);
+        this.properties.put("EndX", (double) (properties.get("EndX") + newX));
+        this.properties.put("EndY", (double) (properties.get("EndY") + newY));
+    }
+
+
+    public void resize() {
+
+    }
+
+
 }

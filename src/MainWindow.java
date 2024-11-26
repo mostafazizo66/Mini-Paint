@@ -2,11 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainWindow extends JFrame {
-    JButton LightModeButton = new JButton("Light Mode");
-    JButton DarkModeButton = new JButton("Dark Mode");
-    JPanel mainPanel = new JPanel();
-    DarkPaintingWindow darkPaintingWindow = new DarkPaintingWindow();
-    LightPaintingWindow lightPaintingWindow = new LightPaintingWindow();
+    private JButton LightModeButton = new JButton("Light Mode");
+    private JButton DarkModeButton = new JButton("Dark Mode");
+    private JPanel mainPanel = new JPanel();
+    private DarkPaintingWindow darkPaintingWindow = new DarkPaintingWindow();
+    private LightPaintingWindow lightPaintingWindow = new LightPaintingWindow();
     private final ImageIcon backgroundImage = new ImageIcon("src/g1.jpg");
 
     public MainWindow() {

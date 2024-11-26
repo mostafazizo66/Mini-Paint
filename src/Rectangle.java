@@ -16,5 +16,17 @@ public class Rectangle extends ShapeTemp {
         }
     }
 
+    @Override
+    public void move(int newX, int newY) {
+        Point p = new Point((int) (newX), (int) (newY));
+        this.setPosition(p);
+
+    }
+
+
+    public void resize() {
+
+    }
+
 
 }
