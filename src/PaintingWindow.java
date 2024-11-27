@@ -10,7 +10,9 @@ public abstract class PaintingWindow extends JFrame {
     protected JButton colorizeButton;
     protected JButton deleteButton;
     protected JButton moveButton;
-    JButton resizeButton;
+    protected JButton SaveButton;
+    protected JButton loadButton;
+    protected JButton resizeButton;
     JPanel mainPanel = new JPanel();
 
     public PaintingWindow() {
@@ -119,9 +121,40 @@ public abstract class PaintingWindow extends JFrame {
         resizeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         controlPanel.add(resizeButton, BorderLayout.SOUTH);
 
+
+        SaveButton = new JButton("Save");
+        SaveButton.addActionListener(e -> save());
+        SaveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        controlPanel.add(SaveButton, BorderLayout.SOUTH);
+
+
+        loadButton = new JButton("Load");
+        loadButton.addActionListener(e -> load());
+        loadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        controlPanel.add(loadButton, BorderLayout.SOUTH);
+
+
+
+
         mainPanel.add(controlPanel, BorderLayout.WEST);
 
 
+    }
+
+    private void save() {
+        if(drawingEngine.getShapes().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No shapes to save", "Error!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            try {
+                drawingEngine.save(fileChooser.getSelectedFile().getAbsolutePath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            JOptionPane.showMessageDialog(this, "Saved successfully");
+        }
     }
 
     private void moveShape() {
@@ -297,6 +330,23 @@ public abstract class PaintingWindow extends JFrame {
 
 
 
+    public void load() {
+        if (!drawingEngine.getShapes().isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "Please save your work before loading a new file");
+        }
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            drawingEngine.getShapes().clear();
+            shapeSelector.removeAllItems();
+            drawingEngine.load(fileChooser.getSelectedFile().getAbsolutePath());
+            JOptionPane.showMessageDialog(this, "Loaded successfully");
+            for (Shape shape : drawingEngine.getShapes()) {
+                shapeSelector.addItem(shape.getName());
+            }
+            canvasPanel.repaint();
+        }
+    }
 
 
     protected abstract void createShape(String shapeType);

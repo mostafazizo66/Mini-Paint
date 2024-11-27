@@ -1,7 +1,8 @@
 import java.awt.*;
+import java.io.Serializable;
 import java.util.Map;
 
-public interface Shape {
+public interface Shape extends Serializable {
     void setPosition(Point position);
     Point getPosition();
 

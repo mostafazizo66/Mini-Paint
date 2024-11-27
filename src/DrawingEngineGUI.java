@@ -4,6 +4,7 @@ import java.util.List;
 
 public class DrawingEngineGUI implements DrawingEngine {
     private List<Shape> shapes = new ArrayList<Shape>();
+    DataBase dataBase = new DataBase(this);
 
     @Override
     public void addShape(Shape shape) {
@@ -35,5 +36,25 @@ public class DrawingEngineGUI implements DrawingEngine {
             }
         }
         return null;
+    }
+
+
+    public void save(String fileName) {
+        try {
+            dataBase.setFileName(fileName);
+            dataBase.save();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void load(String fileName) {
+        try {
+            dataBase.setFileName(fileName);
+            dataBase.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
