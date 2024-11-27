@@ -59,10 +59,9 @@ public abstract class ShapeTemp implements Shape {
         return name;
     }
 
+    public void resize() {
 
-
-
-
+    }
 
 
 

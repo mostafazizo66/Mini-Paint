@@ -26,6 +26,12 @@ public class Square extends ShapeTemp {
     }
 
 
+    public void resize(int newSideLength) {
+        if (properties != null && properties.containsKey("SideLength")) {
+
+            properties.put("SideLength", (double) (newSideLength));
+        }
+    }
 
 
 }

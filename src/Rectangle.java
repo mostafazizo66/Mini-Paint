@@ -24,7 +24,12 @@ public class Rectangle extends ShapeTemp {
     }
 
 
-    public void resize() {
+    public void resize(int newWidth, int newHeight) {
+        if (properties != null && properties.containsKey("Width") && properties.containsKey("Height")) {
+
+            properties.put("Width", (double) (newWidth));
+            properties.put("Height", (double) (newHeight));
+        }
 
     }
 

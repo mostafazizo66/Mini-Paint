@@ -10,6 +10,7 @@ public abstract class PaintingWindow extends JFrame {
     protected JButton colorizeButton;
     protected JButton deleteButton;
     protected JButton moveButton;
+    JButton resizeButton;
     JPanel mainPanel = new JPanel();
 
     public PaintingWindow() {
@@ -113,6 +114,11 @@ public abstract class PaintingWindow extends JFrame {
         moveButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         controlPanel.add(moveButton, BorderLayout.SOUTH);
 
+        resizeButton = new JButton("Resize");
+        resizeButton.addActionListener(e -> resize());
+        resizeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        controlPanel.add(resizeButton, BorderLayout.SOUTH);
+
         mainPanel.add(controlPanel, BorderLayout.WEST);
 
 
@@ -208,6 +214,84 @@ public abstract class PaintingWindow extends JFrame {
 
     public void resize()
     {
+
+
+        if (drawingEngine.getShapes().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No shapes to move", "Error!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String selectedShapeName = (String) shapeSelector.getSelectedItem();
+        if (selectedShapeName != null) {
+            Shape shape = drawingEngine.getShapeByName(selectedShapeName);
+            if (shape == null) return;
+            JPanel inputPanel = new JPanel();
+            inputPanel.setLayout(new GridLayout(0, 2, 10, 10));
+            switch (shape) {
+                case LineSegment lineSegment -> {
+                    JTextField xField = new JTextField(5);
+                    JTextField yField = new JTextField(5);
+                    inputPanel.add(new JLabel("new EndX:"));
+                    inputPanel.add(xField);
+                    inputPanel.add(new JLabel("new EndY:"));
+                    inputPanel.add(yField);
+                    int result = JOptionPane.showConfirmDialog(this, inputPanel, "Resize LineSegment", JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION && Validations.isValidDouble(xField.getText()) && Validations.isValidDouble(yField.getText())) {
+                        int newEndX = Integer.parseInt(xField.getText());
+                        int newEndY = Integer.parseInt(yField.getText());
+                        ((LineSegment) shape).resize(newEndX, newEndY);
+                        canvasPanel.repaint();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Invalid input. Please enter valid numbers.");
+                    }
+                }
+                case Circle circle -> {
+                    JTextField xField = new JTextField(5);
+                    inputPanel.add(new JLabel("New Radius:"));
+                    inputPanel.add(xField);
+                    int result = JOptionPane.showConfirmDialog(this, inputPanel, "Resize Circle", JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION && Validations.isValidDouble(xField.getText())) {
+                        int newRadius = Integer.parseInt(xField.getText());
+                        ((Circle) shape).resize(newRadius);
+                        canvasPanel.repaint();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Invalid input. Please enter valid numbers.");
+                    }
+                }
+                case Square square -> {
+                    JTextField xField = new JTextField(5);
+                    inputPanel.add(new JLabel("New SideLength:"));
+                    inputPanel.add(xField);
+                    int result = JOptionPane.showConfirmDialog(this, inputPanel, "Resize Square", JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION && Validations.isValidDouble(xField.getText())) {
+                        int newSide = Integer.parseInt(xField.getText());
+                        ((Square) shape).resize(newSide);
+                        canvasPanel.repaint();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Invalid input. Please enter valid numbers.");
+                    }
+                }
+                case Rectangle rectangle -> {
+                    JTextField xField = new JTextField(5);
+                    JTextField yField = new JTextField(5);
+                    inputPanel.add(new JLabel("New Width:"));
+                    inputPanel.add(xField);
+                    inputPanel.add(new JLabel("New Height:"));
+                    inputPanel.add(yField);
+                    int result = JOptionPane.showConfirmDialog(this, inputPanel, "Resize Rectangle", JOptionPane.OK_CANCEL_OPTION);
+                    if (result == JOptionPane.OK_OPTION && Validations.isValidDouble(xField.getText()) && Validations.isValidDouble(yField.getText())) {
+                        int newWidth = Integer.parseInt(xField.getText());
+                        int newHeight = Integer.parseInt(yField.getText());
+                        ((Rectangle) shape).resize(newWidth, newHeight);
+                        canvasPanel.repaint();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Invalid input. Please enter valid numbers.");
+                    }
+                }
+                default -> {
+                }
+            }
+        }
+
 
     }
 

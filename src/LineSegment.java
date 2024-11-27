@@ -17,6 +17,15 @@ public class LineSegment extends ShapeTemp {
 
     @Override
     public void move(int newX, int newY) {
+
+        if (newX < this.getPosition().getX() && newY < this.getPosition().getY()) {
+            newX = (int) (newX - this.getPosition().getX());
+            newY = (int) (newY - this.getPosition().getY());
+        } else if (newX < this.getPosition().getX()) {
+            newX = (int) (newX - this.getPosition().getX());
+        } else if (newY < this.getPosition().getY()) {
+            newY = (int) (newY - this.getPosition().getY());
+        }
         Point p = new Point((int) (this.getPosition().getX() + newX), (int) (this.getPosition().getY() + newY));
         this.setPosition(p);
         this.properties.put("EndX", (double) (properties.get("EndX") + newX));
@@ -24,7 +33,11 @@ public class LineSegment extends ShapeTemp {
     }
 
 
-    public void resize() {
+    public void resize(int newEndX, int newEndY) {
+        if (properties != null && properties.containsKey("EndX") && properties.containsKey("EndY")) {
+            properties.put("EndX", (double) (newEndX));
+            properties.put("EndY", (double) (newEndY));
+        }
 
     }
 

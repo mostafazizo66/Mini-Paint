@@ -20,8 +20,11 @@ public class Circle extends ShapeTemp {
         this.setPosition(p);
 
     }
+    public void resize(int newRadius) {
+        if (properties != null && properties.containsKey("Radius")) {
+            properties.put("Radius", (double) (newRadius));
+        }
 
 
-
-
+    }
     }
